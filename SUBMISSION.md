@@ -5,7 +5,7 @@
 - Name: Madhumitha
 - Date submitted: 14 November 2026
 - Repository link: https://github.com/madhumitharaha/pse-support-lab-submission
-- Total time spent: [Approximately 2 hours
+- Total time spent: Approximately 2 hours
 
 All customer communications below are drafts. No external emails were sent.
 
