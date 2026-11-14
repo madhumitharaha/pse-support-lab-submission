@@ -1,0 +1,75 @@
+=== API RESTART TIMELINE ===
+1794641298 exec_create: wget -qO- http://localhost:8080/healthz
+1794641298 exec_start: wget -qO- http://localhost:8080/healthz
+1794641298 exec_die
+1794641303 exec_create: wget -qO- http://localhost:8080/healthz
+1794641303 exec_start: wget -qO- http://localhost:8080/healthz
+1794641303 exec_die
+1794641308 exec_create: wget -qO- http://localhost:8080/healthz
+1794641308 exec_start: wget -qO- http://localhost:8080/healthz
+1794641308 exec_die
+1794641313 exec_create: wget -qO- http://localhost:8080/healthz
+1794641313 exec_start: wget -qO- http://localhost:8080/healthz
+1794641313 exec_die
+1794641318 exec_create: wget -qO- http://localhost:8080/healthz
+1794641318 exec_start: wget -qO- http://localhost:8080/healthz
+1794641318 exec_die
+1794641323 exec_create: wget -qO- http://localhost:8080/healthz
+1794641323 exec_start: wget -qO- http://localhost:8080/healthz
+1794641324 exec_die
+1794641329 exec_create: wget -qO- http://localhost:8080/healthz
+1794641329 exec_start: wget -qO- http://localhost:8080/healthz
+1794641329 exec_die
+1794641334 exec_create: wget -qO- http://localhost:8080/healthz
+1794641334 exec_start: wget -qO- http://localhost:8080/healthz
+1794641334 exec_die
+1794641339 exec_create: wget -qO- http://localhost:8080/healthz
+1794641339 exec_start: wget -qO- http://localhost:8080/healthz
+1794641339 exec_die
+1794641344 exec_create: wget -qO- http://localhost:8080/healthz
+1794641344 exec_start: wget -qO- http://localhost:8080/healthz
+1794641344 exec_die
+1794641349 exec_create: wget -qO- http://localhost:8080/healthz
+1794641349 exec_start: wget -qO- http://localhost:8080/healthz
+1794641349 exec_die
+1794641354 exec_create: wget -qO- http://localhost:8080/healthz
+1794641354 exec_start: wget -qO- http://localhost:8080/healthz
+1794641354 exec_die
+1794641359 exec_create: wget -qO- http://localhost:8080/healthz
+1794641359 exec_start: wget -qO- http://localhost:8080/healthz
+1794641359 exec_die
+1794641364 exec_create: wget -qO- http://localhost:8080/healthz
+1794641364 exec_start: wget -qO- http://localhost:8080/healthz
+1794641364 exec_die
+1794641369 exec_create: wget -qO- http://localhost:8080/healthz
+1794641369 exec_start: wget -qO- http://localhost:8080/healthz
+1794641369 exec_die
+1794641374 exec_create: wget -qO- http://localhost:8080/healthz
+1794641374 exec_start: wget -qO- http://localhost:8080/healthz
+1794641374 exec_die
+1794641379 exec_create: wget -qO- http://localhost:8080/healthz
+1794641379 exec_start: wget -qO- http://localhost:8080/healthz
+1794641379 exec_die
+1794641384 exec_create: wget -qO- http://localhost:8080/healthz
+1794641384 exec_start: wget -qO- http://localhost:8080/healthz
+1794641384 exec_die
+1794641389 exec_create: wget -qO- http://localhost:8080/healthz
+1794641389 exec_start: wget -qO- http://localhost:8080/healthz
+1794641389 exec_die
+1794641394 exec_create: wget -qO- http://localhost:8080/healthz
+1794641394 exec_start: wget -qO- http://localhost:8080/healthz
+1794641394 exec_die
+1794641399 exec_create: wget -qO- http://localhost:8080/healthz
+1794641399 exec_start: wget -qO- http://localhost:8080/healthz
+1794641399 exec_die
+1794641404 exec_create: wget -qO- http://localhost:8080/healthz
+1794641404 exec_start: wget -qO- http://localhost:8080/healthz
+1794641404 exec_die
+1794641409 exec_create: wget -qO- http://localhost:8080/healthz
+1794641409 exec_start: wget -qO- http://localhost:8080/healthz
+1794641409 exec_die
+1794641414 exec_create: wget -qO- http://localhost:8080/healthz
+1794641414 exec_start: wget -qO- http://localhost:8080/healthz
+1794641414 exec_die
+=== API HEALTHCHECK CONFIG ===
+Healthcheck={"Test":["CMD","wget","-qO-","http://localhost:8080/healthz"],"Interval":5000000000,"Timeout":3000000000,"Retries":20} StateHealth={"Status":"healthy","FailingStreak":0,"Log":[{"Start":"2026-11-14T07:29:54.421346548Z","End":"2026-11-14T07:29:54.440226257Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:29:59.443314301Z","End":"2026-11-14T07:29:59.475336051Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:30:04.47705797Z","End":"2026-11-14T07:30:04.507078887Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:30:09.510417333Z","End":"2026-11-14T07:30:09.54087925Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:30:14.541733252Z","End":"2026-11-14T07:30:14.572630752Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"}]}

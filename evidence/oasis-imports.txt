@@ -1,0 +1,5 @@
+          seller           |       trn       |           filename           | import_status | error | row_count | invoice_count | duration_ms |       created_at       |      completed_at      
+---------------------------+-----------------+------------------------------+---------------+-------+-----------+---------------+-------------+------------------------+------------------------
+ Oasis Builders Supply LLC | 100318274600003 | oasis-builders-oct-2026.xlsx | Completed     |       |        16 |             8 |        5400 | 2026-10-31 07:40:00+00 | 2026-10-31 07:40:03+00
+(1 row)
+

@@ -1,0 +1,12 @@
+           name            |           filename           | invoice_number |  status  | rejected_by | errors |       created_at       
+---------------------------+------------------------------+----------------+----------+-------------+--------+------------------------
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-001   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-002   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-003   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-004   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-005   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-006   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-007   | Accepted |             | []     | 2026-10-31 07:40:00+00
+ Oasis Builders Supply LLC | oasis-builders-oct-2026.xlsx | OBS-2610-008   | Accepted |             | []     | 2026-10-31 07:40:00+00
+(8 rows)
+

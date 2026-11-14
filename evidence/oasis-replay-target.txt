@@ -1,0 +1,37 @@
+2-CUSTOMER ?= desert-rose
+3-
+4-.DEFAULT_GOAL := help
+5:.PHONY: help up down reset load replay logs ps psql samples
+6-
+7-help: ## Show available commands
+8-	@grep -E '^[a-z-]+:.*## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*## "}; {printf "  make %-8s %s\n", $$1, $$2}'
+9-
+10-up: ## Build and start the whole stack, wait until it is healthy
+11-	$(COMPOSE) up -d --build --wait --wait-timeout 600
+12-	@echo ""
+13-	@echo "  Portal      http://localhost:3000"
+14-	@echo "  Grafana     http://localhost:3001"
+15-	@echo "  API         http://localhost:8080"
+16-	@echo "  ASP (mock)  http://localhost:8090"
+17-	@echo "  Prometheus  http://localhost:9090"
+18-
+19-down: ## Stop the stack (keeps data)
+20-	$(COMPOSE) down
+--
+26-load: ## Replay this morning's customer traffic (takes a few minutes)
+27-	$(COMPOSE) --profile tools run --rm --build --no-deps tools loadgen load
+28-
+29:replay: ## Replay one customer upload: make replay CUSTOMER=desert-rose|oasis|al-noor|sahara|ghaf
+30:	$(COMPOSE) --profile tools run --rm --build --no-deps tools loadgen replay $(CUSTOMER)
+31-
+32-logs: ## Follow api and asp-mock logs
+33-	$(COMPOSE) logs -f --tail=100 api asp-mock
+34-
+35-ps: ## Show containers
+36-	$(COMPOSE) ps
+37-
+38-psql: ## Open a SQL shell on the portal database
+39-	$(COMPOSE) exec postgres psql -U invoicely -d invoicely
+40-
+41-samples: ## Regenerate the files in samples/
+42-	$(COMPOSE) --profile tools run --rm --build --no-deps --user "$$(id -u):$$(id -g)" -v "$(CURDIR)/samples:/out" tools samplegen -out /out

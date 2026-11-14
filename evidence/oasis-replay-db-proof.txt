@@ -1,0 +1,12 @@
+           name            |           filename           | import_status | invoice_count |  invoice_number   | invoice_status | rejected_by |            asp_message_id            |          created_at           
+---------------------------+------------------------------+---------------+---------------+-------------------+----------------+-------------+--------------------------------------+-------------------------------
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-001-HCYT | Accepted       |             | 4d7c63f4-45a3-41f3-8862-10c872dfe04a | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-002-HCYT | Accepted       |             | 2216c3e1-f1bb-43d4-a501-05d52006083e | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-003-HCYT | Accepted       |             | c1631014-295d-4bdb-b4ea-8f938fb3483a | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-004-HCYT | Accepted       |             | 6dbd1eff-6f30-4bb4-9f65-119b352b586a | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-005-HCYT | Accepted       |             | 281ea5ad-8b69-4699-974d-666a33d3f392 | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-006-HCYT | Accepted       |             | 71212db7-ffd4-4ec6-89cd-ef23791dfa6b | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-007-HCYT | Accepted       |             | 339d8b3f-6823-4880-9873-93f570a28366 | 2026-11-14 07:04:05.592407+00
+ Oasis Builders Supply LLC | oasis-builders-nov-2026.xlsx | Completed     |             8 | OBS-2611-008-HCYT | Accepted       |             | e3eb871f-65eb-4eb6-b9b4-8ea37ffb29f8 | 2026-11-14 07:04:05.592407+00
+(8 rows)
+

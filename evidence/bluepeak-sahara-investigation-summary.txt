@@ -1,0 +1,16 @@
+BLUEPEAK / SAHARA INVESTIGATION
+
+Total invoices: 40
+Accepted: 8 (ASP message IDs available)
+Submitted: 32 (ASP message IDs empty)
+Rejected: 0
+Errors: Empty
+
+Finding:
+HTTP 201 confirms successful import hand-off to Invoicely.
+It does not confirm delivery of all invoices to the buyer.
+The 32 Submitted invoices need ASP status reconciliation.
+
+Customer guidance:
+Do not resend the batch until the outstanding invoice statuses
+are reconciled, to avoid duplicate submissions.

@@ -1,0 +1,34 @@
+=== EVIDENCE FILES ===
+-rw-r--r--  1 madhu  staff     0B 14 Nov 12:20 evidence/oasis-upload-logs.txt
+-rw-r--r--  1 madhu  staff    23B 14 Nov 13:13 evidence/evidence-inventory.txt
+-rw-r--r--  1 madhu  staff    64K 14 Nov 12:59 evidence/api-docker-restart-events.txt
+-rw-r--r--  1 madhu  staff   1.1K 14 Nov 12:18 evidence/invoice-columns.txt
+-rw-r--r--  1 madhu  staff   1.1K 14 Nov 12:50 evidence/api-restart-investigation.txt
+-rw-r--r--  1 madhu  staff   1.3K 14 Nov 12:24 evidence/oasis-invoice-status.txt
+-rw-r--r--  1 madhu  staff   1.5K 14 Nov 12:27 evidence/oasis-replay-target.txt
+-rw-r--r--  1 madhu  staff   1.7K 14 Nov 12:30 evidence/oasis-replay-source-search.txt
+-rw-r--r--  1 madhu  staff   1.8K 14 Nov 13:03 evidence/duplicate-validation-code.txt
+-rw-r--r--  1 madhu  staff   1.9K 14 Nov 12:46 evidence/post-load-service-health.txt
+-rw-r--r--  1 madhu  staff   2.1K 14 Nov 12:37 evidence/oasis-replay-db-proof.txt
+-rw-r--r--  1 madhu  staff   2.3K 14 Nov 12:21 evidence/oasis-db-schema.txt
+-rw-r--r--  1 madhu  staff   2.4K 14 Nov 12:12 evidence/al-noor-code-evidence.txt
+-rw-r--r--  1 madhu  staff   3.2K 14 Nov 12:36 evidence/oasis-replay-result.txt
+-rw-r--r--  1 madhu  staff   3.3K 14 Nov 12:47 evidence/processing-imports-after-load.txt
+-rw-r--r--  1 madhu  staff   314B 14 Nov 12:17 evidence/database-tables.txt
+-rw-r--r--  1 madhu  staff   381B 14 Nov 13:10 evidence/ghaf-investigation-summary.txt
+-rw-r--r--  1 madhu  staff   4.3K 14 Nov 13:00 evidence/api-restart-timeline.txt
+-rw-r--r--  1 madhu  staff   4.6K 14 Nov 12:26 evidence/oasis-reproduction-guidance.txt
+-rw-r--r--  1 madhu  staff   4.6K 14 Nov 12:43 evidence/full-traffic-replay.txt
+-rw-r--r--  1 madhu  staff   4.9K 14 Nov 12:32 evidence/oasis-replay-source-details.txt
+-rw-r--r--  1 madhu  staff   473B 14 Nov 13:08 evidence/bluepeak-sahara-investigation-summary.txt
+-rw-r--r--  1 madhu  staff   5.1K 14 Nov 13:07 evidence/sahara-invoice-status.txt
+-rw-r--r--  1 madhu  staff   5.5K 14 Nov 12:19 evidence/al-noor-db-proof.txt
+-rw-r--r--  1 madhu  staff   5.6K 14 Nov 12:33 evidence/oasis-replay-id-safety.txt
+-rw-r--r--  1 madhu  staff   5.9K 14 Nov 13:09 evidence/ghaf-invoice-proof.txt
+-rw-r--r--  1 madhu  staff   542B 14 Nov 13:02 evidence/duplicate-validation-source.txt
+-rw-r--r--  1 madhu  staff   587B 14 Nov 12:22 evidence/oasis-imports.txt
+-rw-r--r--  1 madhu  staff   6.2K 14 Nov 12:17 evidence/database-schema.txt
+-rw-r--r--  1 madhu  staff   711B 14 Nov 13:04 evidence/oasis-investigation-summary.txt
+-rw-r--r--  1 madhu  staff   870B 14 Nov 12:50 evidence/processing-imports-summary.txt
+=== SUBMISSION FILE ===
+-rw-r--r--  1 madhu  staff   4.7K 14 Nov 11:18 SUBMISSION.md

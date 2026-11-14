@@ -1,0 +1,38 @@
+                                       Table "public.sellers"
+   Column   |           Type           | Collation | Nullable |               Default               
+------------+--------------------------+-----------+----------+-------------------------------------
+ id         | bigint                   |           | not null | nextval('sellers_id_seq'::regclass)
+ name       | text                     |           | not null | 
+ trn        | text                     |           | not null | 
+ peppol_id  | text                     |           | not null | 
+ emirate    | text                     |           | not null | 
+ created_at | timestamp with time zone |           | not null | now()
+Indexes:
+    "sellers_pkey" PRIMARY KEY, btree (id)
+    "sellers_peppol_id_key" UNIQUE CONSTRAINT, btree (peppol_id)
+    "sellers_trn_key" UNIQUE CONSTRAINT, btree (trn)
+Referenced by:
+    TABLE "imports" CONSTRAINT "imports_seller_id_fkey" FOREIGN KEY (seller_id) REFERENCES sellers(id)
+    TABLE "invoices" CONSTRAINT "invoices_seller_id_fkey" FOREIGN KEY (seller_id) REFERENCES sellers(id)
+
+                           Table "public.imports"
+    Column     |           Type           | Collation | Nullable | Default  
+---------------+--------------------------+-----------+----------+----------
+ id            | uuid                     |           | not null | 
+ seller_id     | bigint                   |           | not null | 
+ filename      | text                     |           | not null | 
+ status        | text                     |           | not null | 
+ error         | text                     |           | not null | ''::text
+ row_count     | integer                  |           | not null | 0
+ invoice_count | integer                  |           | not null | 0
+ duration_ms   | bigint                   |           |          | 
+ created_at    | timestamp with time zone |           | not null | now()
+ completed_at  | timestamp with time zone |           |          | 
+Indexes:
+    "imports_pkey" PRIMARY KEY, btree (id)
+    "imports_created_at_idx" btree (created_at DESC)
+Foreign-key constraints:
+    "imports_seller_id_fkey" FOREIGN KEY (seller_id) REFERENCES sellers(id)
+Referenced by:
+    TABLE "invoices" CONSTRAINT "invoices_import_id_fkey" FOREIGN KEY (import_id) REFERENCES imports(id)
+

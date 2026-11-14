@@ -1,0 +1,4 @@
+services/api/internal/validate/validate.go:55:	"AE-BR-07", "AE-BR-08", "AE-BR-09", "AE-BR-10", "AE-BR-11", "AE-BR-12",
+services/api/internal/validate/validate.go:77:			v.log.Error("duplicate check failed", "invoice_number", g.InvoiceNumber, "error", err)
+services/api/internal/validate/validate.go:79:			errs = append(errs, Error{"AE-BR-09", sheet.ColInvoiceNumber,
+services/api/internal/validate/validate.go:80:				fmt.Sprintf("Document number '%s' already exists for this seller with status '%s'.", g.InvoiceNumber, status), first.Number})

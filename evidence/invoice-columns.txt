@@ -1,0 +1,27 @@
+   table_name   |  column_name   |        data_type         
+----------------+----------------+--------------------------
+ invoice_events | id             | bigint
+ invoice_events | invoice_id     | uuid
+ invoice_events | status         | text
+ invoice_events | detail         | text
+ invoice_events | created_at     | timestamp with time zone
+ invoices       | id             | uuid
+ invoices       | import_id      | uuid
+ invoices       | seller_id      | bigint
+ invoices       | invoice_number | text
+ invoices       | buyer_name     | text
+ invoices       | issue_date     | text
+ invoices       | currency       | text
+ invoices       | total_excl_vat | numeric
+ invoices       | total_vat      | numeric
+ invoices       | total_incl_vat | numeric
+ invoices       | status         | text
+ invoices       | rejected_by    | text
+ invoices       | errors         | jsonb
+ invoices       | payload        | jsonb
+ invoices       | asp_message_id | text
+ invoices       | asp_response   | jsonb
+ invoices       | created_at     | timestamp with time zone
+ invoices       | updated_at     | timestamp with time zone
+(23 rows)
+

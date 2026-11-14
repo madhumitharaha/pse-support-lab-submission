@@ -1,0 +1,21 @@
+OASIS BUILDERS - INVESTIGATION
+
+Customer issue:
+Repeated uploads remained on Processing. Subsequent attempts showed
+document number already exists.
+
+Code evidence:
+services/api/internal/validate/validate.go, lines 73-80.
+The validator checks whether the same seller already has the invoice number.
+If it exists, AE-BR-09 is returned.
+
+Replay evidence:
+The load generator appended a unique runTag to invoice numbers.
+The replay completed with 8 accepted invoices.
+
+Limitation:
+The replay does not prove the outcome of the customer's original upload.
+The original attempt's invoice-level status is not yet established.
+
+Customer guidance:
+Do not upload the same batch again until invoice statuses are reconciled.

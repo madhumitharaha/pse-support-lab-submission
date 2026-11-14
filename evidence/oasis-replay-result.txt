@@ -1,0 +1,91 @@
+docker compose --profile tools run --rm --build --no-deps tools loadgen replay oasis
+ Image invoicely-lite-tools Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 550B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 338B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/alpine:3.24.4
+#3 ...
+
+#4 [auth] library/alpine:pull token for registry-1.docker.io
+#4 DONE 0.0s
+
+#5 [auth] library/golang:pull token for registry-1.docker.io
+#5 DONE 0.0s
+
+#6 [internal] load metadata for docker.io/library/golang:1.27.4-alpine3.24
+#6 ...
+
+#3 [internal] load metadata for docker.io/library/alpine:3.24.4
+#3 DONE 2.0s
+
+#6 [internal] load metadata for docker.io/library/golang:1.27.4-alpine3.24
+#6 DONE 2.0s
+
+#7 [internal] load .dockerignore
+#7 transferring context: 2B done
+#7 DONE 0.0s
+
+#8 [build 1/6] FROM docker.io/library/golang:1.27.4-alpine3.24@sha256:0a5f7fe796599ff487605987432e7619ae45beeb2fba4c2ce0b907879932aebf
+#8 resolve docker.io/library/golang:1.27.4-alpine3.24@sha256:0a5f7fe796599ff487605987432e7619ae45beeb2fba4c2ce0b907879932aebf done
+#8 DONE 0.0s
+
+#9 [stage-1 1/3] FROM docker.io/library/alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf
+#9 resolve docker.io/library/alpine:3.24.4@sha256:f59abe656b692d901e184be3445e084786602108599d2a51d229c0f5a48c71bf done
+#9 CACHED
+
+#10 [internal] load build context
+#10 transferring context: 29.52kB done
+#10 DONE 0.0s
+
+#11 [build 2/6] WORKDIR /src
+#11 CACHED
+
+#12 [build 3/6] COPY go.mod go.sum ./
+#12 DONE 0.0s
+
+#13 [build 4/6] RUN go mod download
+#13 DONE 3.8s
+
+#14 [stage-1 2/3] RUN apk add --no-cache ca-certificates
+#14 ...
+
+#15 [build 5/6] COPY . .
+#15 DONE 0.0s
+
+#14 [stage-1 2/3] RUN apk add --no-cache ca-certificates
+#14 3.990 (1/1) Installing ca-certificates (20261020-r0)
+#14 4.082 Executing busybox-1.37.0-r31.trigger
+#14 4.087 Executing ca-certificates-20261020-r0.trigger
+#14 4.126 OK: 8743 KiB in 17 packages
+#14 DONE 4.2s
+
+#16 [build 6/6] RUN CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o /out/ ./cmd/...
+#16 DONE 9.1s
+
+#17 [stage-1 3/3] COPY --from=build /out/ /usr/local/bin/
+#17 DONE 0.0s
+
+#18 exporting to image
+#18 exporting layers
+#18 exporting layers 0.7s done
+#18 exporting manifest sha256:b647b7027f50d8ba9f51ebc8bb4f6181e5e18ba5de1325e52352965a9d73cd9c done
+#18 exporting config sha256:d0bd0b8c4820f5e835747e137d110771dccc2cc1605382a041144dff420d70fb done
+#18 exporting attestation manifest sha256:eb8efecc31c2a867a8a8638585cb89565e3f2f51a7e95860c61626ef7f32a6f7 done
+#18 exporting manifest list sha256:979cffa18c7f6f5392cd571bab2816194516f58ae393a7b05368922f0c445137 done
+#18 naming to docker.io/library/invoicely-lite-tools:latest done
+#18 unpacking to docker.io/library/invoicely-lite-tools:latest 0.1s done
+#18 DONE 0.8s
+
+#19 resolving provenance for metadata file
+#19 DONE 0.0s
+ Image invoicely-lite-tools Built 
+ Container invoicely-lite-tools-run-10f032794c6f Creating 
+ Container invoicely-lite-tools-run-10f032794c6f Created 
+[07:04:05] oasis        uploading oasis-builders-nov-2026.xlsx (169 KB)
+[07:06:07] oasis        HTTP 201 in 121.6s  import=8fcb35f8-5e36-45ac-865f-feab3019b651  status=Completed  invoices=8
+[07:06:15] oasis        invoices: Accepted 8

@@ -1,0 +1,41 @@
+    45	
+    46	func New(dir Directory, invoices Invoices, log *slog.Logger) *Validator {
+    47		return &Validator{dir: dir, invoices: invoices, log: log}
+    48	}
+    49	
+    50	var trnPattern = regexp.MustCompile(`^1\d{12}03$`)
+    51	
+    52	// Rules lists the portal rule ids.
+    53	var Rules = []string{
+    54		"AE-BR-01", "AE-BR-02", "AE-BR-03", "AE-BR-04", "AE-BR-05", "AE-BR-06",
+    55		"AE-BR-07", "AE-BR-08", "AE-BR-09", "AE-BR-10", "AE-BR-11", "AE-BR-12",
+    56	}
+    57	
+    58	func init() {
+    59		for _, rule := range Rules {
+    60			metrics.ValidationFailures.WithLabelValues(rule)
+    61		}
+    62	}
+    63	
+    64	var vatRates = map[string]float64{"S": 5, "Z": 0, "E": 0, "O": 0}
+    65	
+    66	// Validate checks every row of an invoice, then the invoice as a whole.
+    67	func (v *Validator) Validate(ctx context.Context, seller Seller, importID string, g sheet.Group) []Error {
+    68		var errs []Error
+    69		for _, row := range g.Rows {
+    70			errs = append(errs, v.validateRow(ctx, row)...)
+    71		}
+    72	
+    73		first := g.Rows[0]
+    74		if g.InvoiceNumber != "" {
+    75			status, exists, err := v.invoices.ExistingStatus(ctx, seller.ID, g.InvoiceNumber, importID)
+    76			if err != nil {
+    77				v.log.Error("duplicate check failed", "invoice_number", g.InvoiceNumber, "error", err)
+    78			} else if exists {
+    79				errs = append(errs, Error{"AE-BR-09", sheet.ColInvoiceNumber,
+    80					fmt.Sprintf("Document number '%s' already exists for this seller with status '%s'.", g.InvoiceNumber, status), first.Number})
+    81			}
+    82		}
+    83		if trn := first.Get(sheet.ColSellerTRN); trn != "" && trn != seller.TRN {
+    84			errs = append(errs, Error{"AE-BR-10", sheet.ColSellerTRN,
+    85				"Seller TRN in the file does not match the selected company.", first.Number})

@@ -1,0 +1,45 @@
+# Submission
+
+- **Name:**
+- **Date submitted:**
+- **Repository link:**
+- **Total time spent (real time):**
+
+> Replies below are drafts written on the **exercise clock** (Monday 16 November 2026, Asia/Dubai). Keep your real time in the time log at the end. Put screenshots, log excerpts and query output in `evidence/` and link to them.
+
+> **Required:** the Acknowledgement and Priority sections for **all five** items, and the full write-up (investigation log onwards) for **at least three** items of your choice. For an item you did not fully investigate, replace the remaining sections with "Not investigated — what I would check next: …".
+
+- **Items I fully investigated, and why I chose them:**
+
+---
+
+## Incident 1 — `inbox/01-oasis-builders-upload-stuck.md`
+
+### Acknowledgement
+
+- **Sent at (exercise clock):**
+- **Reply:**
+
+> …
+
+### Priority and justification
+
+- **Priority:**
+- **Why:**
+- **SLA deadlines I am working to** (first response / next update / resolution target):
+
+### Investigation log
+
+| Time (exercise clock) | What I checked / did | What I found |
+|---|---|---|
+| | | |
+
+Include dead ends and hypotheses you ruled out.
+
+### Root cause
+
+- **What happened:**
+- **Where** (component, `file:line`):
+- **Why it happens:**
+- **Evidence** (Grafana panels or queries, log lines, database queries, code references — link to `evidence/`):
+- **Confidence and open questions:**

@@ -1,0 +1,31 @@
+README.md:21:Upload `samples/desert-rose-nov-2026.xlsx` for **Desert Rose Trading LLC** to see a normal, clean import.
+README.md:43:| `make load` | Replay recent customer traffic: the four customer files plus a burst of peak-hour uploads from other customers. Takes about 3–4 minutes. |
+README.md:44:| `make replay CUSTOMER=<name>` | Replay one customer's upload. `<name>` is one of `oasis`, `al-noor`, `sahara`, `ghaf`, `desert-rose`. |
+README.md:55:| `samples/oasis-builders-nov-2026.xlsx` | Monthly consolidated file: 8 invoices / 600 lines. |
+README.md:62:## Uploading a file
+README.md:64:**In the portal:** open http://localhost:3000, choose the company (seller), pick the `.xlsx` file and upload. The import page then shows the import status and each invoice with its own status.
+README.md:82:| `POST /v1/imports` | Upload a file. Multipart form fields `file` (.xlsx) and `seller_id` (int). Returns `201` with the import once the file is parsed and validated; `400` with `{"error":"..."}` for a bad form or file. |
+README.md:85:| `GET /v1/imports/{id}/rows` | Source rows of the uploaded sheet, as shown on the batch page (`available:false` when the preview is no longer available). |
+README.md:86:| `GET /v1/imports/{id}/source` | Download the original uploaded file. |
+README.md:110:| `tools/` | Sample file generator and traffic replay. |
+START_HERE.md:7:Invoicely Lite is a small, **fictional** UAE e-invoicing portal. Businesses upload an Excel file, the portal turns each invoice into a PINT AE e-invoice and sends it to an Accredited Service Provider (ASP) on the Peppol network.
+START_HERE.md:54:make load    # replay this morning's customer traffic (~3–4 minutes)
+START_HERE.md:61:2. Upload the clean sample `samples/desert-rose-nov-2026.xlsx` (seller: Desert Rose Trading LLC). Watch what normal looks like in the portal, in Grafana and in the logs.
+START_HERE.md:63:4. Work the items in your priority order. Use `make load` or `make replay CUSTOMER=<name>` to reproduce what customers did.
+docs/architecture.md:7:Invoicely Lite sits in front of corner 2: customers upload an Excel file, the portal checks it, converts each invoice to PINT AE and submits it to the ASP. When the ASP accepts an invoice it returns a message id, shown in the portal as the **ASP reference**.
+docs/architecture.md:36:| web | `web/` | Portal: upload page, batches, batch detail, invoice detail. Server-side proxy from `/api/*` to the api. |
+docs/architecture.md:44:## How an upload flows
+docs/architecture.md:46:1. The customer chooses a company and uploads an `.xlsx` file (`POST /v1/imports`).
+docs/architecture.md:50:5. The upload request returns. Validated invoices are submitted to the ASP in the background: **Submitted**, then **Accepted** or **Rejected** (by ASP), or **Failed** if the ASP could not be reached.
+docs/template-field-guide.md:3:Customers upload an Excel workbook (`.xlsx`) with a sheet named **`Invoices`**. Row 1 holds the column headers exactly as below. Columns marked `*` are mandatory. The workbook may contain other sheets (the official template has `Instructions` and `Lists`); they are ignored.
+docs/template-field-guide.md:23:| `Seller TRN identifier*` | Yes | 15 digits | `100234567800003` | Starts with 1, ends with 03. Must match the company chosen at upload. |
+docs/template-field-guide.md:68:These run when the file is uploaded. An invoice that fails any of them is **Rejected (by portal)** and is not sent to the ASP. The row number in the error points to the row in Excel.
+docs/customer-communication.md:10:6. **Give them something to do — or tell them to wait.** A workaround, a safe next step, or a clear "please do not re-upload until I confirm".
+docs/customer-communication.md:43:| "You uploaded the wrong file." | "The file has the invoice date in a format the portal can't read. Here is how to change it in two steps." |
+docs/status-lifecycle.md:5:One upload = one import. The batch list shows the import status and a count of invoices per status.
+docs/status-lifecycle.md:9:    [*] --> Uploaded
+docs/status-lifecycle.md:10:    Uploaded --> Processing
+docs/status-lifecycle.md:17:| Uploaded | File received. |
+docs/status-lifecycle.md:18:| Processing | The portal is reading and validating the file. The upload page shows "Processing your file…" during this time. |
+docs/status-lifecycle.md:43:| Rejected — by portal | Failed one or more portal rules (AE-BR-xx). It was **not** sent to the ASP. | Correct the file and upload the corrected invoices again. |
+docs/status-lifecycle.md:57:A rejected invoice does not "use up" its number: the customer can upload a corrected invoice with the same number. An invoice number that already exists in any other status gives AE-BR-09.

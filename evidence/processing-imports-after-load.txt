@@ -1,0 +1,28 @@
+           seller           |       filename       |   status   | row_count | invoice_count |          created_at           | completed_at 
+----------------------------+----------------------+------------+-----------+---------------+-------------------------------+--------------
+ Desert Rose Trading LLC    | drt-morning-57.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:21.623343+00 | 
+ Marina Bay Hospitality LLC | mbh-morning-58.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:21.703456+00 | 
+ Palm Coast Electronics LLC | pce-morning-59.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:21.775635+00 | 
+ Zayed Port Logistics LLC   | zpl-morning-60.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:21.851779+00 | 
+ Desert Rose Trading LLC    | drt-morning-61.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:21.946189+00 | 
+ Marina Bay Hospitality LLC | mbh-morning-62.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:22.022623+00 | 
+ Palm Coast Electronics LLC | pce-morning-63.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:22.096718+00 | 
+ Zayed Port Logistics LLC   | zpl-morning-64.xlsx  | Processing |        12 |             6 | 2026-11-14 07:12:22.171188+00 | 
+ Marina Bay Hospitality LLC | mbh-morning-142.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:45.749526+00 | 
+ Palm Coast Electronics LLC | pce-morning-143.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:45.849688+00 | 
+ Zayed Port Logistics LLC   | zpl-morning-144.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:45.928992+00 | 
+ Desert Rose Trading LLC    | drt-morning-145.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:46.006508+00 | 
+ Marina Bay Hospitality LLC | mbh-morning-146.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:46.08244+00  | 
+ Palm Coast Electronics LLC | pce-morning-147.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:46.158733+00 | 
+ Zayed Port Logistics LLC   | zpl-morning-148.xlsx | Processing |        12 |             6 | 2026-11-14 07:12:48.037832+00 | 
+ Desert Rose Trading LLC    | drt-morning-149.xlsx | Processing |         0 |             0 | 2026-11-14 07:12:48.119639+00 | 
+ Palm Coast Electronics LLC | pce-morning-227.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:10.674506+00 | 
+ Zayed Port Logistics LLC   | zpl-morning-228.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:10.751986+00 | 
+ Desert Rose Trading LLC    | drt-morning-229.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:10.825227+00 | 
+ Marina Bay Hospitality LLC | mbh-morning-230.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:10.901713+00 | 
+ Palm Coast Electronics LLC | pce-morning-231.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:10.980475+00 | 
+ Zayed Port Logistics LLC   | zpl-morning-232.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:12.866605+00 | 
+ Desert Rose Trading LLC    | drt-morning-233.xlsx | Processing |        12 |             6 | 2026-11-14 07:13:12.949097+00 | 
+ Marina Bay Hospitality LLC | mbh-morning-234.xlsx | Processing |         0 |             0 | 2026-11-14 07:13:13.032309+00 | 
+(24 rows)
+

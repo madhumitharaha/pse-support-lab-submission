@@ -1,0 +1,103 @@
+=== REPLAY FUNCTION ===
+   140				return s, true
+   141			}
+   142		}
+   143		return dataset.Sample{}, false
+   144	}
+   145	
+   146	func replay(key string) error {
+   147		s, ok := findSample(key)
+   148		if !ok {
+   149			var keys []string
+   150			for _, s := range dataset.Samples {
+   151				keys = append(keys, s.Key)
+   152			}
+   153			return fmt.Errorf("unknown customer %q (choose one of: %s)", key, strings.Join(keys, ", "))
+   154		}
+   155		data, err := workbook.Build(s.Build("-" + runTag))
+   156		if err != nil {
+   157			return err
+   158		}
+   159		logf("%-12s uploading %s (%d KB)", key, s.Filename, len(data)/1024)
+   160		imp, code, elapsed, err := upload(s.SellerID, s.Filename, data)
+   161		if err != nil {
+   162			logf("%-12s upload failed after %.1fs: %v", key, elapsed.Seconds(), err)
+   163			return nil
+   164		}
+   165		logf("%-12s HTTP %d in %.1fs  import=%s  status=%s  invoices=%d", key, code, elapsed.Seconds(), imp.ID, imp.Status, imp.InvoiceCount)
+   166		if final := settle(imp.ID, 90*time.Second); final != nil {
+   167			logf("%-12s invoices: %s", key, formatCounts(final.StatusCounts))
+   168		}
+   169		return nil
+   170	}
+   171	
+   172	func peak(n, concurrency int) {
+   173		logf("peak       %d uploads from %d customers, %d at a time", n, len(dataset.PeakSellers), concurrency)
+   174		r := rand.New(rand.NewPCG(uint64(time.Now().UnixNano()), 7))
+   175		type job struct {
+   176			sellerID int
+   177			name     string
+   178			data     []byte
+   179		}
+   180		jobs := make(chan job)
+=== CUSTOMER DATASET MAPPING ===
+     1	// Package dataset defines the fictional customer files used by the lab.
+     2	package dataset
+     3	
+     4	import (
+     5		"fmt"
+     6		"math/rand/v2"
+     7	
+     8		"invoicely/tools/internal/workbook"
+     9	)
+    10	
+    11	type Party = workbook.Party
+    12	
+    13	var (
+    14		DesertRose   = Party{"Desert Rose Trading LLC", "100234567800003", "Office 1204, Al Fahidi Tower", "Dubai", "DXB"}
+    15		OasisBuilder = Party{"Oasis Builders Supply LLC", "100318274600003", "Plot 17, Industrial Area 6", "Sharjah", "SHJ"}
+    16		MarinaBay    = Party{"Marina Bay Hospitality LLC", "100427193500003", "Marina Walk, Building 3", "Dubai", "DXB"}
+    17		AlNoor       = Party{"Al Noor Fuel & Lubricants LLC", "100536284100003", "Mussafah M-14, Street 9", "Abu Dhabi", "AUH"}
+    18		Sahara       = Party{"Sahara Medical Supplies FZE", "100645371900003", "Warehouse B7, Ajman Free Zone", "Ajman", "AJM"}
+    19		GhafCafe     = Party{"Ghaf Tree Café LLC", "100754862300003", "Corniche Road, Shop 4", "Fujairah", "FUJ"}
+    20		PalmCoast    = Party{"Palm Coast Electronics LLC", "100863917200003", "Al Quoz 3, Warehouse 21", "Dubai", "DXB"}
+    21		ZayedPort    = Party{"Zayed Port Logistics LLC", "100972845600003", "Mina Zayed, Gate 2", "Abu Dhabi", "AUH"}
+    22	)
+    23	
+    24	var (
+    25		PalmHospital = Party{"Emirates Palm Hospital LLC", "100118273600003", "Healthcare City, Building 42", "Dubai", "DXB"}
+    26		AlWaha       = Party{"Al Waha Hypermarkets LLC", "100129384700003", "Al Wahda Street", "Sharjah", "SHJ"}
+    27		Bluewater    = Party{"Bluewater Facilities Management LLC", "100130495800003", "Khalifa City A, Villa 18", "Abu Dhabi", "AUH"}
+    28		Crescent     = Party{"Crescent Contracting LLC", "100141506900003", "Al Barsha 1, Office 302", "Dubai", "DXB"}
+    29		GulfHorizon  = Party{"Gulf Horizon Transport LLC", "100152617000003", "Al Jurf Industrial 2", "Ajman", "AJM"}
+    30		SaffronEvent = Party{"Saffron Events LLC", "100163728100003", "Dibba Road, Unit 9", "Fujairah", "FUJ"}
+    31		Northstar    = Party{"Northstar Engineering Consultants LLC", "100174839200003", "Al Nahda 2, Office 11", "Dubai", "DXB"}
+    32		CoralReef    = Party{"Coral Reef Resorts LLC", "100185940300003", "Al Marjan Island", "Ras Al Khaimah", "RAK"}
+    33	)
+    34	
+    35	const iban = "AE070331234567890123456"
+    36	
+    37	func S(item string, qty float64, unit string, price float64, itemType string) workbook.Line {
+    38		return workbook.Line{Item: item, Qty: qty, Unit: unit, Price: price, Category: "S", ItemType: itemType}
+    39	}
+    40	
+    41	// Sample is one named customer file.
+    42	type Sample struct {
+    43		Key      string // short name used by `make replay CUSTOMER=<key>`
+    44		Filename string
+    45		SellerID int
+    46		Build    func(suffix string) workbook.File
+    47	}
+    48	
+    49	// Samples are the customer files shipped in samples/.
+    50	var Samples = []Sample{
+    51		{"desert-rose", "desert-rose-nov-2026.xlsx", 1, desertRose},
+    52		{"oasis", "oasis-builders-nov-2026.xlsx", 2, oasis},
+    53		{"al-noor", "al-noor-fuel-nov-2026.xlsx", 4, alNoor},
+    54		{"sahara", "sahara-medical-batch-1116.xlsx", 5, sahara},
+    55		{"ghaf", "ghaf-cafe-nov-2026.xlsx", 6, ghaf},
+    56	}
+    57	
+    58	func desertRose(suffix string) workbook.File {
+    59		n := func(i int) string { return fmt.Sprintf("DRT-2611-%03d%s", i, suffix) }
+    60		return workbook.File{

@@ -1,0 +1,10 @@
+=== API STARTUP AND HEALTH DETAILS ===
+api-1  | {"time":"2026-11-14T05:54:43.36121321Z","level":"INFO","msg":"api starting","addr":":8080","asp_url":"http://asp-mock:8090"}
+api-1  | {"time":"2026-11-14T05:54:43.36948396Z","level":"INFO","msg":"api listening","addr":":8080"}
+api-1  | {"time":"2026-11-14T07:12:23.511338965Z","level":"INFO","msg":"api starting","addr":":8080","asp_url":"http://asp-mock:8090"}
+api-1  | {"time":"2026-11-14T07:12:23.518097506Z","level":"INFO","msg":"api listening","addr":":8080"}
+api-1  | {"time":"2026-11-14T07:12:48.319046837Z","level":"INFO","msg":"api starting","addr":":8080","asp_url":"http://asp-mock:8090"}
+api-1  | {"time":"2026-11-14T07:12:48.325051504Z","level":"INFO","msg":"api listening","addr":":8080"}
+api-1  | {"time":"2026-11-14T07:13:13.234057252Z","level":"INFO","msg":"api starting","addr":":8080","asp_url":"http://asp-mock:8090"}
+api-1  | {"time":"2026-11-14T07:13:13.24058246Z","level":"INFO","msg":"api listening","addr":":8080"}
+Status=running RestartCount=3 OOMKilled=false ExitCode=0 Health={"Status":"healthy","FailingStreak":0,"Log":[{"Start":"2026-11-14T07:51:12.553690501Z","End":"2026-11-14T07:51:12.585907043Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:51:17.587202795Z","End":"2026-11-14T07:51:17.61987542Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:51:22.621336214Z","End":"2026-11-14T07:51:22.655682339Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:51:27.658568342Z","End":"2026-11-14T07:51:27.690595467Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"},{"Start":"2026-11-14T07:51:32.695296636Z","End":"2026-11-14T07:51:32.724992469Z","ExitCode":0,"Output":"{\"status\":\"ok\"}\n"}]}

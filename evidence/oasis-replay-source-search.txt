@@ -1,0 +1,18 @@
+tools/cmd/loadgen/main.go:1:// Command loadgen replays customer uploads against the Invoicely API.
+tools/cmd/loadgen/main.go:3://	loadgen replay <customer>   upload one customer's file (desert-rose, oasis, al-noor, sahara, ghaf)
+tools/cmd/loadgen/main.go:4://	loadgen peak [-n 150]       morning-peak uploads from several customers
+tools/cmd/loadgen/main.go:5://	loadgen load                replay oasis, al-noor, sahara and ghaf, then the morning peak
+tools/cmd/loadgen/main.go:146:func replay(key string) error {
+tools/cmd/loadgen/main.go:282:		fmt.Fprintln(os.Stderr, "usage: loadgen replay <customer> | peak [-n N] | load")
+tools/cmd/loadgen/main.go:288:	case "replay":
+tools/cmd/loadgen/main.go:290:			fmt.Fprintln(os.Stderr, "usage: loadgen replay <customer>")
+tools/cmd/loadgen/main.go:293:		if err := replay(os.Args[2]); err != nil {
+tools/cmd/loadgen/main.go:305:		logf("replaying customer traffic against %s (run %s)", apiURL, runTag)
+tools/cmd/loadgen/main.go:307:		for _, key := range []string{"oasis", "al-noor", "sahara", "ghaf"} {
+tools/cmd/loadgen/main.go:311:				_ = replay(key)
+tools/Dockerfile:11:CMD ["loadgen", "load"]
+tools/internal/dataset/dataset.go:15:	OasisBuilder = Party{"Oasis Builders Supply LLC", "100318274600003", "Plot 17, Industrial Area 6", "Sharjah", "SHJ"}
+tools/internal/dataset/dataset.go:43:	Key      string // short name used by `make replay CUSTOMER=<key>`
+tools/internal/dataset/dataset.go:52:	{"oasis", "oasis-builders-nov-2026.xlsx", 2, oasis},
+tools/internal/dataset/dataset.go:103:func oasis(suffix string) workbook.File {
+tools/internal/dataset/dataset.go:106:	f := workbook.File{Source: "Oasis ERP Export", Seller: OasisBuilder, PaymentMeans: "30", Account: "AE450260001012345678901"}

@@ -1,0 +1,17 @@
+GHAF TREE CAFE - INVESTIGATION
+
+Total invoices: 4
+Rejected: 4
+Rule: AE-BR-04
+Rejection source: Portal validation
+
+Issue:
+Invoice issue date and payment due date use DD/MM/YYYY.
+The portal expects YYYY-MM-DD.
+
+Affected invoices:
+GTC-118, GTC-119, GTC-120, GTC-121
+
+Workaround:
+Convert issue dates and due dates to YYYY-MM-DD.
+Validate the corrected workbook before uploading again.

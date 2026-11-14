@@ -1,0 +1,28 @@
+=== SUBMISSION PLACEHOLDERS ===
+5:- Name: [Enter your name]
+6:- Date submitted: [Enter date]
+7:- Repository link: [Add your GitHub repository URL]
+8:- Total time spent: [Enter actual time]
+=== EVIDENCE LINK CHECK ===
+OK: evidence/al-noor-code-evidence.txt
+OK: evidence/al-noor-db-proof.txt
+OK: evidence/al-noor-rejection-logs.txt
+OK: evidence/api-restart-investigation.txt
+OK: evidence/api-restart-timeline.txt
+MISSING OR EMPTY: evidence/api-startup-health-details.txt
+OK: evidence/bluepeak-sahara-investigation-summary.txt
+OK: evidence/duplicate-validation-code.txt
+OK: evidence/full-traffic-replay.txt
+OK: evidence/ghaf-investigation-summary.txt
+OK: evidence/ghaf-invoice-proof.txt
+OK: evidence/oasis-imports.txt
+OK: evidence/oasis-investigation-summary.txt
+OK: evidence/oasis-invoice-status.txt
+OK: evidence/oasis-replay-db-proof.txt
+OK: evidence/oasis-replay-result.txt
+OK: evidence/post-load-service-health.txt
+OK: evidence/processing-imports-after-load.txt
+OK: evidence/processing-imports-summary.txt
+OK: evidence/sahara-invoice-status.txt
+=== EMPTY EVIDENCE FILES ===
+evidence/oasis-upload-logs.txt

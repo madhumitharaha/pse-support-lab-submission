@@ -1,0 +1,70 @@
+                                                       Table "public.invoices"
+     Column     |           Type           | Collation | Nullable |   Default   | Storage  | Compression | Stats target | Description 
+----------------+--------------------------+-----------+----------+-------------+----------+-------------+--------------+-------------
+ id             | uuid                     |           | not null |             | plain    |             |              | 
+ import_id      | uuid                     |           | not null |             | plain    |             |              | 
+ seller_id      | bigint                   |           | not null |             | plain    |             |              | 
+ invoice_number | text                     |           | not null |             | extended |             |              | 
+ buyer_name     | text                     |           | not null | ''::text    | extended |             |              | 
+ issue_date     | text                     |           | not null | ''::text    | extended |             |              | 
+ currency       | text                     |           | not null | ''::text    | extended |             |              | 
+ total_excl_vat | numeric(14,2)            |           | not null | 0           | main     |             |              | 
+ total_vat      | numeric(14,2)            |           | not null | 0           | main     |             |              | 
+ total_incl_vat | numeric(14,2)            |           | not null | 0           | main     |             |              | 
+ status         | text                     |           | not null |             | extended |             |              | 
+ rejected_by    | text                     |           | not null | ''::text    | extended |             |              | 
+ errors         | jsonb                    |           | not null | '[]'::jsonb | extended |             |              | 
+ payload        | jsonb                    |           | not null |             | extended |             |              | 
+ asp_message_id | text                     |           | not null | ''::text    | extended |             |              | 
+ asp_response   | jsonb                    |           |          |             | extended |             |              | 
+ created_at     | timestamp with time zone |           | not null | now()       | plain    |             |              | 
+ updated_at     | timestamp with time zone |           | not null | now()       | plain    |             |              | 
+Indexes:
+    "invoices_pkey" PRIMARY KEY, btree (id)
+    "invoices_import_idx" btree (import_id)
+    "invoices_seller_number_idx" btree (seller_id, invoice_number)
+    "invoices_status_idx" btree (status)
+Foreign-key constraints:
+    "invoices_import_id_fkey" FOREIGN KEY (import_id) REFERENCES imports(id)
+    "invoices_seller_id_fkey" FOREIGN KEY (seller_id) REFERENCES sellers(id)
+Referenced by:
+    TABLE "invoice_events" CONSTRAINT "invoice_events_invoice_id_fkey" FOREIGN KEY (invoice_id) REFERENCES invoices(id)
+Access method: heap
+
+                                                                  Table "public.invoice_events"
+   Column   |           Type           | Collation | Nullable |                  Default                   | Storage  | Compression | Stats target | Description 
+------------+--------------------------+-----------+----------+--------------------------------------------+----------+-------------+--------------+-------------
+ id         | bigint                   |           | not null | nextval('invoice_events_id_seq'::regclass) | plain    |             |              | 
+ invoice_id | uuid                     |           | not null |                                            | plain    |             |              | 
+ status     | text                     |           | not null |                                            | extended |             |              | 
+ detail     | text                     |           | not null | ''::text                                   | extended |             |              | 
+ created_at | timestamp with time zone |           | not null | now()                                      | plain    |             |              | 
+Indexes:
+    "invoice_events_pkey" PRIMARY KEY, btree (id)
+    "invoice_events_invoice_idx" btree (invoice_id, id)
+Foreign-key constraints:
+    "invoice_events_invoice_id_fkey" FOREIGN KEY (invoice_id) REFERENCES invoices(id)
+Access method: heap
+
+                                                      Table "public.imports"
+    Column     |           Type           | Collation | Nullable | Default  | Storage  | Compression | Stats target | Description 
+---------------+--------------------------+-----------+----------+----------+----------+-------------+--------------+-------------
+ id            | uuid                     |           | not null |          | plain    |             |              | 
+ seller_id     | bigint                   |           | not null |          | plain    |             |              | 
+ filename      | text                     |           | not null |          | extended |             |              | 
+ status        | text                     |           | not null |          | extended |             |              | 
+ error         | text                     |           | not null | ''::text | extended |             |              | 
+ row_count     | integer                  |           | not null | 0        | plain    |             |              | 
+ invoice_count | integer                  |           | not null | 0        | plain    |             |              | 
+ duration_ms   | bigint                   |           |          |          | plain    |             |              | 
+ created_at    | timestamp with time zone |           | not null | now()    | plain    |             |              | 
+ completed_at  | timestamp with time zone |           |          |          | plain    |             |              | 
+Indexes:
+    "imports_pkey" PRIMARY KEY, btree (id)
+    "imports_created_at_idx" btree (created_at DESC)
+Foreign-key constraints:
+    "imports_seller_id_fkey" FOREIGN KEY (seller_id) REFERENCES sellers(id)
+Referenced by:
+    TABLE "invoices" CONSTRAINT "invoices_import_id_fkey" FOREIGN KEY (import_id) REFERENCES imports(id)
+Access method: heap
+

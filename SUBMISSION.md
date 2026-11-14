@@ -1,246 +1,227 @@
-# Submission
+# Invoicely Lite – Product Support Engineer Assignment
 
-- **Name:**
-- **Date submitted:**
-- **Repository link:**
-- **Total time spent (real time):**
+## Submission details
 
-> Replies below are drafts written on the **exercise clock** (Monday 16 November 2026, Asia/Dubai). Keep your real time in the time log at the end. Put screenshots, log excerpts and query output in `evidence/` and link to them.
+- Name: Madhumitha
+- Date submitted: 14 November 2026
+- Repository link: https://github.com/madhumitharaha/pse-support-lab-submission
+- Total time spent: [Approximately 2 hours
 
-> **Required:** the Acknowledgement and Priority sections for **all five** items, and the full write-up (investigation log onwards) for **at least three** items of your choice. For an item you did not fully investigate, replace the remaining sections with "Not investigated — what I would check next: …".
+All customer communications below are drafts. No external emails were sent.
 
-- **Items I fully investigated, and why I chose them:**
+## 1. Ticket triage and acknowledgement drafts
 
----
+### 1. Oasis Builders – Upload stuck
+- Received: 16 Nov 2026, 09:05 GST
+- Priority: P2
+- Reason: Repeated uploads, duplicate warnings and month-end impact.
+- Proposed acknowledgement: 09:10 GST
 
-## Incident 1 — `inbox/01-oasis-builders-upload-stuck.md`
+Hello Rashid,
 
-### Acknowledgement
+We understand that repeated upload attempts have left you uncertain about which invoices were processed. Please do not upload the same workbook again until we reconcile the invoice statuses. We are checking the import and invoice-level records and will confirm which documents were submitted and which need further action.
 
-- **Sent at (exercise clock):**
-- **Reply:**
+Regards,
+Invoicely Lite Support
 
-> …
+### 2. API restart alert / Priya Nair
+- Received: 16 Nov 2026, 09:42 GST; Priya forward at 09:50 GST
+- Priority: P1
+- Reason: Critical API restart alert, intermittent 502 reports and invoices reportedly stuck in Validated. Marina Bay go-live is on 18 November.
+- Proposed acknowledgement: 09:55 GST
 
-### Priority and justification
+Hi Priya,
 
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to** (first response / next update / resolution target):
+I have taken ownership of this incident. We are investigating the API restart alert alongside the reported 502 responses and invoices stalled in Validated. The API is currently healthy in our lab checks, but the exact cause of the reported restarts is not confirmed. We will continue checking processing status and service health before confirming go-live readiness.
 
-### Investigation log
+Regards,
+Support On-call
 
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
+### 3. Al Noor Fuel – BR-CO-15
+- Received: 16 Nov 2026, 10:15 GST
+- Priority: P2
+- Reason: Three rejected invoices and an active VAT audit review.
+- Proposed acknowledgement: 10:20 GST
 
-Include dead ends and hypotheses you ruled out.
+Dear Fatima,
 
-### Root cause
+We reviewed the three rejected invoices. The ASP response reports a difference between the inclusive total and the sum of the exclusive total and VAT. Our investigation found differences of AED 0.01, AED 0.02 and AED 0.01. The portal validation passed, but the ASP rejected the invoices.
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence** (Grafana panels or queries, log lines, database queries, code references — link to `evidence/`):
-- **Confidence and open questions:**
+Please retain the original workbook and avoid manually changing quantities or prices. We recommend technical reconciliation before resubmission.
 
-### Customer resolution reply OR escalation note
+Kind regards,
+Invoicely Lite Support
 
-- **Which one and why:**
+### 4. Bluepeak ERP / Sahara Medical
+- Received: 16 Nov 2026, 11:30 GST
+- Priority: P2
+- Reason: Buyer reports missing invoices; 40 invoices were in the connector batch and resending may create duplicates.
+- Proposed acknowledgement: 11:35 GST
 
-> …
+Hi Daniel,
 
-(For an escalation, use the template in [docs/escalation-policy.md](docs/escalation-policy.md). If you escalate, also include the update you send the customer.)
+HTTP 201 confirms that the import request was accepted by Invoicely; it does not confirm that every invoice reached the buyer. Our controlled lab replay showed 8 Accepted and 32 still Submitted without ASP message references. These outstanding documents need reconciliation.
 
-### Workaround offered
+Please hold off on resending the batch until the invoice statuses and ASP references are checked.
 
-### Prevention ideas
+Regards,
+Invoicely Lite Support
 
----
+### 5. Ghaf Tree Café – Date format
+- Received: 16 Nov 2026, 12:10 GST
+- Priority: P3
+- Reason: Four invoices rejected due to a correctable date-format issue.
+- Proposed acknowledgement: 12:15 GST
 
-## Incident 2 — `inbox/02-alert-api-restarted-marina-bay.md`
+Hello,
 
-### Acknowledgement
+We identified that the invoice issue dates and payment due dates use DD/MM/YYYY, while the portal expects YYYY-MM-DD. Please convert both date columns to the required format, validate the corrected workbook and then upload it again. For example, 13/11/2026 should be 2026-11-13.
 
-- **Sent at (exercise clock):**
-- **Sent to:**
-- **Reply:**
+Kind regards,
+Invoicely Lite Support
 
-> …
+Note: The inbox does not specify formal SLA targets. Proposed acknowledgement times above are draft exercise-clock times, not actual sent times.
 
-### Priority and justification
+## 2. Detailed investigations
 
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to:**
+### Investigation A – Al Noor Fuel: BR-CO-15
 
-### Investigation log
+Affected invoices:
 
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
+| Invoice | Actual inclusive | Expected inclusive | Difference |
+|---|---:|---:|---:|
+| ANF-2611-0042 | AED 15,022.42 | AED 15,022.43 | AED 0.01 |
+| ANF-2611-0044 | AED 11,817.57 | AED 11,817.59 | AED 0.02 |
+| ANF-2611-0046 | AED 5,610.99 | AED 5,611.00 | AED 0.01 |
 
-### Root cause
+Status history: Parsed → Validated → Submitted → Rejected.
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
+Database records confirm rejected_by = asp.
 
-### Customer resolution reply OR escalation note
+Code findings:
+- services/api/internal/pint/pint.go, lines 157–185: net, VAT and gross totals are aggregated and rounded.
+- services/asp-mock/main.go, lines 225–229: ASP compares inclusive total with exclusive total plus VAT.
+- services/asp-mock/main.go, line 188: cents conversion uses math.Round.
 
-- **Which one and why:**
+Finding:
+The API's gross calculation and the ASP's exclusive-plus-VAT comparison use different calculation paths. The resulting rounding differences explain the BR-CO-15 rejections observed in this lab.
 
-> …
+Customer action:
+Retain the original workbook. Do not manually change quantities or prices. Reconcile the calculation before resubmitting the three rejected invoices.
 
-### Workaround offered
+Evidence:
+- evidence/al-noor-code-evidence.txt
+- evidence/al-noor-db-proof.txt
+- evidence/al-noor-rejection-logs.txt
 
-### Prevention ideas
+### Investigation B – Oasis Builders: upload and duplicate warnings
 
----
+Historical database records showed an October upload with 8 invoices. The November customer complaint's original invoice-level outcomes were not established from those historical records.
 
-## Incident 3 — `inbox/03-al-noor-fuel-br-co-15.md`
+Code finding:
+services/api/internal/validate/validate.go, lines 73–80 checks whether the invoice number already exists for the same seller. If it exists, AE-BR-09 is returned.
 
-### Acknowledgement
+Controlled replay:
+The load generator adds a unique run tag to generated invoice numbers. The controlled Oasis replay completed with 8 Accepted invoices.
 
-- **Sent at (exercise clock):**
-- **Reply:**
+Finding and limitation:
+The replay confirms that a newly generated Oasis batch can be accepted. It does not prove what happened during the customer's original repeated upload attempts. The original upload's complete status reconciliation remains open.
 
-> …
+Customer action:
+Do not upload the same batch again until the original invoice statuses are reconciled. Do not manually change invoice numbers.
 
-### Priority and justification
+Evidence:
+- evidence/oasis-imports.txt
+- evidence/oasis-invoice-status.txt
+- evidence/oasis-replay-result.txt
+- evidence/oasis-replay-db-proof.txt
+- evidence/duplicate-validation-code.txt
+- evidence/oasis-investigation-summary.txt
 
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to:**
+### Investigation C – API restart and peak traffic
 
-### Investigation log
+The controlled lab load test attempted 240 peak uploads:
+- 209 successful
+- 31 failed
+- 24 EOF errors
+- 1 connection refused
+- 6 DNS lookup failures
 
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
+The load summary reported 213 Completed imports and 24 Processing imports. A database snapshot showed 24 Processing imports across four sellers.
 
-### Root cause
+API container checks:
+- RestartCount: 3
+- OOMKilled: false
+- ExitCode: 0
+- Current health: healthy
+- Health-check failing streak: 0
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
+Finding:
+The lab reproduced upload failures during peak traffic and showed three API restarts. OOM termination was not indicated. The exact restart cause was not established. The lab load-test timestamps are separate from the exercise inbox timestamps, so they do not prove the cause of the reported 16 November incident.
 
-### Customer resolution reply OR escalation note
+Next action:
+Engineering should correlate the reported incident window with API, proxy and infrastructure logs, and reconcile the invoices remaining in Processing. Continue monitoring before confirming Marina Bay go-live readiness.
 
-- **Which one and why:**
+Evidence:
+- evidence/full-traffic-replay.txt
+- evidence/post-load-service-health.txt
+- evidence/processing-imports-after-load.txt
+- evidence/processing-imports-summary.txt
+- evidence/api-restart-investigation.txt
+- evidence/api-restart-timeline.txt
+- evidence/api-startup-health-details.txt
 
-> …
+### Investigation D – Bluepeak / Sahara Medical
 
-### Workaround offered
+Controlled replay produced 40 invoices:
+- 8 Accepted with ASP message IDs
+- 32 Submitted without ASP message IDs
+- 0 Rejected
 
-### Prevention ideas
+Finding:
+HTTP 201 indicates successful import hand-off, not confirmation that every invoice reached the buyer. The 32 outstanding Submitted invoices need ASP status reconciliation. The controlled replay does not establish the original customer batch's exact delivery outcome.
 
----
+Customer action:
+Do not resend until outstanding invoice references and ASP statuses are reconciled.
 
-## Incident 4 — `inbox/04-bluepeak-sahara-not-received.md`
+Evidence:
+- evidence/sahara-invoice-status.txt
+- evidence/bluepeak-sahara-investigation-summary.txt
 
-### Acknowledgement
+### Investigation E – Ghaf Tree Café
 
-- **Sent at (exercise clock):**
-- **Reply:**
+Database evidence showed four rejected invoices:
+- GTC-118
+- GTC-119
+- GTC-120
+- GTC-121
 
-> …
+All were rejected by portal validation with AE-BR-04 because issue dates and due dates used DD/MM/YYYY instead of YYYY-MM-DD.
 
-### Priority and justification
+Workaround:
+Correct both date columns, validate the corrected workbook, and upload it again.
 
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to:**
+Evidence:
+- evidence/ghaf-invoice-proof.txt
+- evidence/ghaf-investigation-summary.txt
 
-### Investigation log
+## 3. AI and tools disclosure
 
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
+ChatGPT assisted with investigation, interpretation and drafting. Findings were checked against the local lab portal, source code, logs and PostgreSQL records.
 
-### Root cause
+Tools used:
+- Docker Desktop and Docker Compose
+- Local Invoicely Lite portal and Grafana
+- Terminal and Go source inspection
+- PostgreSQL and SQL queries
+- Local API and ASP mock logs
 
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
+No real customer emails were sent and no external company or ASP was contacted. All communications are proposed drafts.
 
-### Customer resolution reply OR escalation note
+## 4. Limitations and open questions
 
-- **Which one and why:**
-
-> …
-
-### Workaround offered
-
-### Prevention ideas
-
----
-
-## Incident 5 — `inbox/05-ghaf-cafe-date-error.md`
-
-### Acknowledgement
-
-- **Sent at (exercise clock):**
-- **Reply:**
-
-> …
-
-### Priority and justification
-
-- **Priority:**
-- **Why:**
-- **SLA deadlines I am working to:**
-
-### Investigation log
-
-| Time (exercise clock) | What I checked / did | What I found |
-|---|---|---|
-| | | |
-
-### Root cause
-
-- **What happened:**
-- **Where** (component, `file:line`):
-- **Why it happens:**
-- **Evidence:**
-- **Confidence and open questions:**
-
-### Customer resolution reply OR escalation note
-
-- **Which one and why:**
-
-> …
-
-### Workaround offered
-
-### Prevention ideas
-
----
-
-## Overall
-
-### Prioritisation
-
-The order in which you worked the five items, and why. Did you change your mind as you learned more?
-
-### What I would do differently
-
-### What I learned / what I would need to learn
-
-Be specific: concepts, tools or parts of the system that were new to you, how you got up to speed, and what you would study next.
-
-### Time log (real time)
-
-| Date | From–to | What I worked on |
-|---|---|---|
-| | | |
-
-### AI usage disclosure
-
-Which tools you used (or "none"), what for, and how you checked their output against the system.
+- Exact cause of the three API restarts remains undetermined.
+- Oasis original November upload outcomes were not fully established.
+- Bluepeak's original outstanding invoices require ASP reconciliation.
+- No production fix was applied to the lab source code.
+- Controlled replay results are not treated as proof of original customer outcomes.

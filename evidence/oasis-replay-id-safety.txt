@@ -1,0 +1,142 @@
+=== RUN TAG ===
+29-var (
+30-	apiURL = env("API_URL", "http://api:8080")
+31-	client = &http.Client{Timeout: 10 * time.Minute}
+32:	runTag = strings.ToUpper(strconv.FormatInt(time.Now().Unix()%1679616, 36))
+33-)
+34-
+35-func env(k, def string) string {
+36-	if v := os.Getenv(k); v != "" {
+37-		return v
+--
+152-		}
+153-		return fmt.Errorf("unknown customer %q (choose one of: %s)", key, strings.Join(keys, ", "))
+154-	}
+155:	data, err := workbook.Build(s.Build("-" + runTag))
+156-	if err != nil {
+157-		return err
+158-	}
+159-	logf("%-12s uploading %s (%d KB)", key, s.Filename, len(data)/1024)
+160-	imp, code, elapsed, err := upload(s.SellerID, s.Filename, data)
+--
+208-	}
+209-	for i := range n {
+210-		seller := dataset.PeakSellers[i%len(dataset.PeakSellers)]
+211:		prefix := fmt.Sprintf("%s-1116-%s-%03d", seller.Prefix, runTag, i+1)
+212-		data, err := workbook.Build(dataset.PeakFile(seller.Party, prefix, r))
+213-		if err != nil {
+214-			logf("build failed: %v", err)
+215-			continue
+216-		}
+--
+302-		peak(*n, *c)
+303-		summary(start)
+304-	case "load":
+305:		logf("replaying customer traffic against %s (run %s)", apiURL, runTag)
+306-		var wg sync.WaitGroup
+307-		for _, key := range []string{"oasis", "al-noor", "sahara", "ghaf"} {
+308-			wg.Add(1)
+309-			go func() {
+310-				defer wg.Done()
+=== OASIS INVOICE GENERATOR ===
+103:func oasis(suffix string) workbook.File {
+104-	sites := []Party{Crescent, Northstar, CoralReef, Bluewater, Crescent, GulfHorizon, Northstar, CoralReef}
+105-	r := rand.New(rand.NewPCG(2611, 2))
+106-	f := workbook.File{Source: "Oasis ERP Export", Seller: OasisBuilder, PaymentMeans: "30", Account: "AE450260001012345678901"}
+107-	for i, site := range sites {
+108-		inv := workbook.Invoice{
+109-			Number:    fmt.Sprintf("OBS-2611-%03d%s", i+1, suffix),
+110-			IssueDate: "2026-11-15", DueDate: "2026-12-15", Buyer: site,
+111-		}
+112-		for range 75 {
+113-			it := buildingItems[r.IntN(len(buildingItems))]
+114-			kind := "Goods"
+115-			if it.unit == "HUR" || it.unit == "DAY" {
+116-				kind = "Services"
+117-			}
+118-			inv.Lines = append(inv.Lines, S(it.name, float64(1+r.IntN(40)), it.unit, it.price, kind))
+119-		}
+120-		f.Invoices = append(f.Invoices, inv)
+121-	}
+122-	return f
+123-}
+124-
+125-func alNoor(suffix string) workbook.File {
+126-	n := func(i int) string { return fmt.Sprintf("ANF-2611-%04d%s", i, suffix) }
+127-	diesel := func(q, p float64) workbook.Line { return S("Diesel EN590", q, "LTR", p, "Goods") }
+128-	return workbook.File{
+129-		Source: "AlNoor FuelDesk", Seller: AlNoor, PaymentMeans: "30", Account: "AE210400000123456789012",
+130-		Invoices: []workbook.Invoice{
+131-			{n(41), "2026-11-12", "2026-12-12", GulfHorizon, []workbook.Line{diesel(4850, 2.835)}},
+132-			{n(42), "2026-11-12", "2026-12-12", ZayedPort, []workbook.Line{
+133-				diesel(3125, 2.917),
+134-				S("Petrol Special 95", 1837, "LTR", 2.585, "Goods"),
+135-				S("Engine oil 15W-40 5 L", 24, "EA", 18.45, "Goods"),
+136-			}},
+137-			{n(43), "2026-11-13", "2026-12-13", Crescent, []workbook.Line{
+138-				diesel(6200, 2.835),
+139-				S("Engine oil 15W-40 5 L", 60, "EA", 18.45, "Goods"),
+140-			}},
+141-			{n(44), "2026-11-13", "2026-12-13", GulfHorizon, []workbook.Line{
+142-				diesel(2275, 2.917),
+143-				S("Petrol Special 95", 1365, "LTR", 2.585, "Goods"),
+144-				S("AdBlue", 415, "LTR", 1.275, "Goods"),
+145-				S("Hydraulic oil 20 L", 12, "EA", 46.75, "Goods"),
+146-			}},
+147-			{n(45), "2026-11-14", "2026-12-14", Bluewater, []workbook.Line{diesel(3980, 2.835)}},
+148-			{n(46), "2026-11-14", "2026-12-14", ZayedPort, []workbook.Line{
+149-				diesel(1512, 2.917),
+150-				S("AdBlue", 732, "LTR", 1.275, "Goods"),
+151-			}},
+152-		},
+153-	}
+154-}
+155-
+156-var medicalItems = []struct {
+157-	name  string
+158-	unit  string
+159-	price float64
+160-}{
+161-	{"Nitrile examination gloves (box of 100)", "BX", 45}, {"Disposable syringes 5 ml (box of 100)", "BX", 60},
+162-	{"Surgical face masks (box of 50)", "BX", 30}, {"Sterile gauze swabs (pack of 100)", "PK", 26},
+163-	{"IV cannula 20G (box of 50)", "BX", 140}, {"Alcohol prep pads (box of 200)", "BX", 22},
+164-}
+165-
+166-func sahara(suffix string) workbook.File {
+167-	f := workbook.File{Source: "Bluepeak Connector", Seller: Sahara, PaymentMeans: "30", Account: "AE600500000000123456789"}
+168-	for i := range 40 {
+169-		buyer := PalmHospital
+170-		if i%8 == 7 {
+171-			buyer = CoralReef
+172-		}
+173-		inv := workbook.Invoice{
+174-			Number:    fmt.Sprintf("SMS-1116-%03d%s", i+1, suffix),
+175-			IssueDate: "2026-11-16", DueDate: "2026-12-16", Buyer: buyer,
+176-		}
+177-		a := medicalItems[i%len(medicalItems)]
+178-		inv.Lines = append(inv.Lines, S(a.name, float64(10+i%7*5), a.unit, a.price, "Goods"))
+179-		if i%2 == 1 {
+180-			b := medicalItems[(i+3)%len(medicalItems)]
+181-			inv.Lines = append(inv.Lines, S(b.name, float64(5+i%4*5), b.unit, b.price, "Goods"))
+182-		}
+183-		f.Invoices = append(f.Invoices, inv)
+184-	}
+185-	return f
+186-}
+187-
+188-func ghaf(suffix string) workbook.File {
+189-	n := func(i int) string { return fmt.Sprintf("GTC-%03d%s", i, suffix) }
+190-	return workbook.File{
+191-		Source: "Manual", Seller: GhafCafe, PaymentMeans: "10",
+192-		Invoices: []workbook.Invoice{
+193-			{n(118), "13/11/2026", "13/12/2026", SaffronEvent, []workbook.Line{
+194-				S("Corporate breakfast catering (per guest)", 40, "EA", 45, "Services"),
+195-				S("Karak tea urn", 4, "EA", 60, "Goods"),
+196-			}},
+197-			{n(119), "13/11/2026", "13/12/2026", Northstar, []workbook.Line{
+198-				S("Office lunch boxes", 25, "EA", 38, "Goods"),
+199-				S("Delivery charge", 1, "EA", 30, "Services"),
+200-			}},
+201-			{n(120), "14/11/2026", "14/12/2026", CoralReef, []workbook.Line{
+202-				S("Arabic sweets platter", 6, "EA", 85, "Goods"),
+203-				S("Fresh juice jug 1.5 L", 10, "EA", 28, "Goods"),
